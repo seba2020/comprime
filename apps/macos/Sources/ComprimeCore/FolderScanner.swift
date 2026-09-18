@@ -21,35 +21,51 @@ public struct FolderScanner: Sendable {
                                                                   options: [.skipsHiddenFiles, .skipsPackageDescendants])
                         .sorted { $0.lastPathComponent.localizedStandardCompare($1.lastPathComponent) == .orderedAscending }
                     var snapshot = ScanSnapshot()
-                    var thumbnailBytes = 0
-                    for url in entries {
-                        try Task.checkCancellation()
-                        let name = url.lastPathComponent
-                        if name == "Comprimidas" || name.hasPrefix("Comprimidas-") || name == ".comprime-backups" {
+                    let workerCount = min(8, max(2, ProcessInfo.processInfo.activeProcessorCount - 1))
+                    var nextIndex = 0
+
+                    func apply(_ result: EntryResult) {
+                        switch result {
+                        case .excluded:
                             snapshot.excluded += 1
-                            continue
-                        }
-                        do {
-                            let values = try url.resourceValues(forKeys: keys)
-                            guard values.isSymbolicLink != true, values.isPackage != true, values.isRegularFile == true else {
-                                snapshot.excluded += 1
-                                continue
-                            }
+                        case .asset(let asset):
                             snapshot.examined += 1
-                            let remainingThumbnailBytes = snapshot.assets.count < limits.eagerThumbnailCount
-                                ? max(0, limits.thumbnailBudget - thumbnailBytes)
-                                : 0
-                            let inspected = try autoreleasepool {
-                                try inspect(url, values: values, remainingThumbnailBytes: remainingThumbnailBytes)
-                            }
-                            thumbnailBytes += inspected.thumbnail?.count ?? 0
-                            snapshot.assets.append(inspected)
-                        } catch {
-                            snapshot.issues.append(ScanIssue(url: url, reason: error.localizedDescription))
+                            snapshot.assets.append(asset)
+                        case .issue(let issue):
+                            snapshot.examined += 1
+                            snapshot.issues.append(issue)
                         }
-                        // Yield the first usable result immediately. Subsequent larger batches
-                        // avoid repeatedly rebuilding a long SwiftUI sidebar during a scan.
-                        if snapshot.assets.count == 1 || snapshot.examined % 48 == 0 {
+                    }
+
+                    // Inspect the first entry alone so an initial asset can reach the UI
+                    // immediately. The remaining entries are processed in bounded parallel
+                    // batches that use available CPU and SSD throughput without flooding memory.
+                    if let first = entries.first {
+                        try Task.checkCancellation()
+                        apply(inspectEntry(first, keys: keys, entryIndex: 0))
+                        nextIndex = 1
+                        if !snapshot.assets.isEmpty || snapshot.examined > 0 { continuation.yield(snapshot) }
+                    }
+
+                    while nextIndex < entries.count {
+                        try Task.checkCancellation()
+                        let endIndex = min(entries.count, nextIndex + workerCount)
+                        let batch = entries[nextIndex..<endIndex]
+                        var results: [(Int, EntryResult)] = []
+                        await withTaskGroup(of: (Int, EntryResult).self) { group in
+                            for (offset, url) in batch.enumerated() {
+                                let entryIndex = nextIndex + offset
+                                group.addTask { (entryIndex, inspectEntry(url, keys: keys, entryIndex: entryIndex)) }
+                            }
+                            for await result in group { results.append(result) }
+                        }
+                        let hadAsset = !snapshot.assets.isEmpty
+                        let previousExamined = snapshot.examined
+                        for (_, result) in results.sorted(by: { $0.0 < $1.0 }) { apply(result) }
+                        nextIndex = endIndex
+                        // Yield the first usable result immediately, then at measured batches.
+                        if (!hadAsset && !snapshot.assets.isEmpty)
+                            || previousExamined / 48 != snapshot.examined / 48 {
                             continuation.yield(snapshot)
                         }
                     }
@@ -60,6 +76,25 @@ public struct FolderScanner: Sendable {
                 } catch { continuation.finish(throwing: error) }
             }
             continuation.onTermination = { @Sendable _ in task.cancel() }
+        }
+    }
+
+    private func inspectEntry(_ url: URL, keys: Set<URLResourceKey>, entryIndex: Int) -> EntryResult {
+        let name = url.lastPathComponent
+        if name == "Comprimidas" || name.hasPrefix("Comprimidas-") || name == ".comprime-backups" { return .excluded }
+        do {
+            let values = try url.resourceValues(forKeys: keys)
+            guard values.isSymbolicLink != true, values.isPackage != true, values.isRegularFile == true else { return .excluded }
+            let eagerLimit = limits.eagerThumbnailCount
+            let thumbnailAllowance = entryIndex < eagerLimit && eagerLimit > 0
+                ? max(1, limits.thumbnailBudget / eagerLimit)
+                : 0
+            let asset = try autoreleasepool {
+                try inspect(url, values: values, remainingThumbnailBytes: thumbnailAllowance)
+            }
+            return .asset(asset)
+        } catch {
+            return .issue(ScanIssue(url: url, reason: error.localizedDescription))
         }
     }
 
@@ -99,6 +134,12 @@ public struct FolderScanner: Sendable {
                           colorProfile: properties[kCGImagePropertyProfileName as String] as? String,
                           modifiedAt: values.contentModificationDate, thumbnail: thumbnail)
     }
+}
+
+private enum EntryResult: Sendable {
+    case excluded
+    case asset(ImageAsset)
+    case issue(ScanIssue)
 }
 private enum ScanFailure: LocalizedError {
     case message(String)
