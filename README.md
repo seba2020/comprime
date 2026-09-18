@@ -8,6 +8,11 @@ Paquete de especificaciones para implementar una utilidad nativa macOS que reduc
 
 MVP 0.1 Beta funcional disponible: app SwiftUI con modos Sistema/Claro/Oscuro, preview Original/Comprimida, objetivo por imagen, motor multiformato y procesamiento por lote con salida segura. La landing Next.js incluye descarga, contacto por X y Vercel Web Analytics. Ver [validación del MVP](validation/mvp-0.1.md).
 
+- Sitio de producción: https://comprime-two.vercel.app/
+- Repositorio privado: https://github.com/seba2020/comprime
+- Contacto: https://x.com/Sebahhgg
+- Paquete público: https://comprime-two.vercel.app/Comprime-0.1-Beta-macOS-Apple-Silicon.zip
+
 El **segundo mockup aprobado** está recuperado y versionado en [reference/comprime-approved-mockup-v2.png](reference/comprime-approved-mockup-v2.png). La procedencia, hash y revisión de fidelidad están en [reference/mockup-reference.md](reference/mockup-reference.md).
 
 ## Leer en este orden
@@ -54,6 +59,6 @@ Fuente: conversación «Recorta», ID 6aac9e13-8f14-83e9-8cfa-5f0b2bf97222, recu
 
 Los detalles nuevos aparecen como **decisiones de implementación propuestas** o **parámetros iniciales a validar**. No se presentan como acuerdos históricos. Las capacidades concretas de codecs y versiones de dependencias se verifican en fase 0; este paquete no declara esa validación realizada.
 
-## Instrucción para iniciar implementación
+## Estado de distribución
 
-Continúa cerrando los pendientes documentados de fases 0 y 1 de implementation-plan.md antes de avanzar al motor. Lee los seis documentos y la referencia visual. Conserva el alcance multiformato y separa la app nativa de la landing. Registra las capacidades reales de los codecs en macOS 14 y posteriores; no asumas encoding WebP nativo ni soporte universal de contenidos HEIF. Crea el proyecto SwiftUI y las abstracciones del motor, con fixtures seguros y errores tipados. Informa qué compila, qué se verificó y qué permanece pendiente antes de avanzar de fase. No inventes ni marques como aprobado un mockup sustituto.
+La primera beta está compilada, firmada localmente, empaquetada y publicada. El ZIP servido por Vercel tiene SHA-256 `ec44406b09fc5b1077f4f0e5fc3c58c45004f43f5ac85a254e60375131fe1104` y pasó la comprobación de integridad. La app todavía no utiliza certificado Developer ID ni notarización de Apple; la landing explica el paso de apertura manual requerido por macOS.

@@ -2,7 +2,7 @@
 
 ## Estado y reglas
 
-Entrega actual: seis especificaciones y primera implementación de fases 0/1. Build SwiftPM y comprobaciones del escáner aprobados; pruebas locales de codecs realizadas. Fases 0/1 permanecen parciales por los pendientes de [validación](validation/phase-0-1.md). Las fases 2–7 siguen pendientes. No saltar criterios de salida ni ampliar el alcance sin documentar la decisión.
+Entrega actual: MVP 0.1 Beta funcional y distribuible. La aplicación nativa, el motor multiformato, el preview, la salida segura y la landing están implementados y validados dentro del alcance de esta beta. Los detalles y límites verificados están en [validación del MVP](validation/mvp-0.1.md).
 
 Progresión: 0 → 1 → 2 → 3 → 4 → 5 → 7. Fase 6 (landing) puede comenzar tras 1 y disponer de captura aprobada; publicar descarga exige 7. El mockup aprobado ya está recuperado y se usa como referencia directa.
 
@@ -72,7 +72,7 @@ Salida: inyectar fallo antes/después de backup, validación y reemplazo; siempr
 - Crear/conectar repo GitHub cuando se inicie esta fase; importar directamente en Vercel con raíz apps/landing.
 - Verificar preview de Vercel y luego publicación configurada; registrar URLs reales.
 
-Estado: implementación local completa; build de producción aprobado. Repositorio y URL de producción se registran al terminar la publicación.
+Estado: completada. Repositorio privado en https://github.com/seba2020/comprime, producción en https://comprime-two.vercel.app/ y Vercel Web Analytics activo. La integración GitHub→Vercel usa `apps/landing` como raíz.
 
 Salida: tipos/lint/build correctos; móvil y escritorio sin overflow, navegación por teclado y enlaces válidos; sin upload ni trackers. Deploy procede de integración GitHub→Vercel, nunca ChatGPT Sites. No hace falta desplegar la landing para validar motor local.
 
@@ -107,4 +107,4 @@ Salida: binario verificable, requisitos claros y limitaciones documentadas. No d
 
 ## Próximo bloque de trabajo
 
-Comenzar por fase 0 y estructura de fase 1. El primer informe de implementación debe entregar: versiones verificadas, tabla real de codecs, decisión WebP, fixtures, proyecto que compila y resultados del escaneo. No construir landing y reemplazo avanzado antes de validar bases. No registrar como completadas las fases por mera existencia de archivos vacíos.
+La versión 0.1 queda cerrada. Un siguiente ciclo puede abordar firma Developer ID y notarización, pruebas adicionales en hardware/versiones de macOS y mejoras basadas en uso real, sin reabrir el alcance de esta primera beta.
