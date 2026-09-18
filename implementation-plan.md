@@ -72,7 +72,7 @@ Salida: inyectar fallo antes/después de backup, validación y reemplazo; siempr
 - Crear/conectar repo GitHub cuando se inicie esta fase; importar directamente en Vercel con raíz apps/landing.
 - Verificar preview de Vercel y luego publicación configurada; registrar URLs reales.
 
-Estado: completada. Repositorio privado en https://github.com/seba2020/comprime, producción en https://comprime-two.vercel.app/ y Vercel Web Analytics activo. La integración GitHub→Vercel usa `apps/landing` como raíz.
+Estado: completada. Repositorio público en https://github.com/seba2020/comprime, producción en https://comprime-two.vercel.app/ y Vercel Web Analytics activo. La integración GitHub→Vercel usa `apps/landing` como raíz.
 
 Salida: tipos/lint/build correctos; móvil y escritorio sin overflow, navegación por teclado y enlaces válidos; sin upload ni trackers. Deploy procede de integración GitHub→Vercel, nunca ChatGPT Sites. No hace falta desplegar la landing para validar motor local.
 

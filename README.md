@@ -9,7 +9,7 @@ Paquete de especificaciones para implementar una utilidad nativa macOS que reduc
 MVP 0.1 Beta funcional disponible: app SwiftUI con modos Sistema/Claro/Oscuro, preview Original/Comprimida, objetivo por imagen, motor multiformato y procesamiento por lote con salida segura. La landing Next.js incluye descarga, contacto por X y Vercel Web Analytics. Ver [validación del MVP](validation/mvp-0.1.md).
 
 - Sitio de producción: https://comprime-two.vercel.app/
-- Repositorio privado: https://github.com/seba2020/comprime
+- Repositorio público: https://github.com/seba2020/comprime
 - Contacto: https://x.com/Sebahhgg
 - Paquete público: https://comprime-two.vercel.app/Comprime-0.1-Beta-macOS-Apple-Silicon.zip
 
@@ -61,4 +61,4 @@ Los detalles nuevos aparecen como **decisiones de implementación propuestas** o
 
 ## Estado de distribución
 
-La primera beta está compilada, firmada localmente, empaquetada y publicada. El ZIP servido por Vercel tiene SHA-256 `ec44406b09fc5b1077f4f0e5fc3c58c45004f43f5ac85a254e60375131fe1104` y pasó la comprobación de integridad. La app todavía no utiliza certificado Developer ID ni notarización de Apple; la landing explica el paso de apertura manual requerido por macOS.
+La primera beta está compilada, firmada localmente, empaquetada y publicada desde un repositorio público. El ZIP servido por Vercel tiene SHA-256 `ec44406b09fc5b1077f4f0e5fc3c58c45004f43f5ac85a254e60375131fe1104` y pasó la comprobación de integridad. La app todavía no utiliza certificado Developer ID ni notarización de Apple; la landing explica el paso de apertura manual requerido por macOS.
