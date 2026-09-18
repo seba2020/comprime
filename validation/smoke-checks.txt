@@ -1,0 +1,13 @@
+PASS: Generate synthetic alpha PNG
+PASS: Detect content independently of extension
+PASS: Read alpha and dimensions
+PASS: Exclude links/subfolders/hidden files and isolate corrupt input
+PASS: Original bytes remain intact
+PASS: Pixel budget rejects large inputs before thumbnail decoding
+PASS: Thumbnail budget does not remove valid inventory
+PASS: Empty folder completes cleanly
+PASS: Reject invalid target
+PASS: Missing folder reports error
+PASS: Scan real mixed JPEG/PNG/HEIC/WebP fixtures
+Mixed inventory: 9 assets, 1 non-image/unsupported entries
+All executable checks passed.

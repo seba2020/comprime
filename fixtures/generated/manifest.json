@@ -1,0 +1,68 @@
+[
+  {
+    "file": ".synthetic-70.heic-TOhR",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  },
+  {
+    "file": ".synthetic-95.heic-G0G2",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  },
+  {
+    "file": "heic-container.heif",
+    "bytes": 1842,
+    "sha256": "e1f470fd244c4b257bc2852a96ef9ea79bab6f3d0a85db8266767ea75899ef5b",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  },
+  {
+    "file": "synthetic-70.heic",
+    "bytes": 1842,
+    "sha256": "e1f470fd244c4b257bc2852a96ef9ea79bab6f3d0a85db8266767ea75899ef5b",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  },
+  {
+    "file": "synthetic-70.jpg",
+    "bytes": 61935,
+    "sha256": "baaeee42965b3e1f44830e56d5fe811bd07529c53b88210ad6241d7c87d1babb",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  },
+  {
+    "file": "synthetic-70.png",
+    "bytes": 7555,
+    "sha256": "b2d03d7d06cc75da774e28d584e49dd12d3e193d5e4db13212600ce799a4c86d",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  },
+  {
+    "file": "synthetic-70.webp",
+    "bytes": 2918,
+    "sha256": "f53780ffcfc178710ad890cc841c8e9a11de8188cf9c7ad867f8d840ccd559ae",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  },
+  {
+    "file": "synthetic-95.heic",
+    "bytes": 2233,
+    "sha256": "51e2e3007af4683438c487b95691ea8f52fac6b27c052a002a7c7a85b31ddb7e",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  },
+  {
+    "file": "synthetic-95.jpg",
+    "bytes": 74805,
+    "sha256": "7df1ac825cbdf1af5163689020fa9fcb5ba759425ae517a5902ce6ddb7d18f81",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  },
+  {
+    "file": "synthetic-95.png",
+    "bytes": 7555,
+    "sha256": "b2d03d7d06cc75da774e28d584e49dd12d3e193d5e4db13212600ce799a4c86d",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  },
+  {
+    "file": "synthetic-95.webp",
+    "bytes": 3620,
+    "sha256": "3b76b69c673638dc4ce0921fcff253a569ff5f614624105a159501fc6c39a7d6",
+    "origin": "Generated synthetic stripes by CodecProbe; no personal imagery"
+  }
+]

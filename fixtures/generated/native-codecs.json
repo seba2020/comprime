@@ -1,0 +1,86 @@
+{
+  "architecture" : "arm64",
+  "formats" : [
+    {
+      "advertisedRead" : true,
+      "advertisedWrite" : true,
+      "attempts" : [
+        {
+          "bytes" : 61935,
+          "decoded" : true,
+          "detectedType" : "public.jpeg",
+          "encoded" : true,
+          "qualityRequested" : 0.69999999999999996
+        },
+        {
+          "bytes" : 74805,
+          "decoded" : true,
+          "detectedType" : "public.jpeg",
+          "encoded" : true,
+          "qualityRequested" : 0.94999999999999996
+        }
+      ],
+      "type" : "public.jpeg"
+    },
+    {
+      "advertisedRead" : true,
+      "advertisedWrite" : true,
+      "attempts" : [
+        {
+          "bytes" : 7555,
+          "decoded" : true,
+          "detectedType" : "public.png",
+          "encoded" : true,
+          "qualityRequested" : 0.69999999999999996
+        },
+        {
+          "bytes" : 7555,
+          "decoded" : true,
+          "detectedType" : "public.png",
+          "encoded" : true,
+          "qualityRequested" : 0.94999999999999996
+        }
+      ],
+      "type" : "public.png"
+    },
+    {
+      "advertisedRead" : true,
+      "advertisedWrite" : true,
+      "attempts" : [
+        {
+          "bytes" : 1842,
+          "decoded" : true,
+          "detectedType" : "public.heic",
+          "encoded" : true,
+          "qualityRequested" : 0.69999999999999996
+        },
+        {
+          "bytes" : 2233,
+          "decoded" : true,
+          "detectedType" : "public.heic",
+          "encoded" : true,
+          "qualityRequested" : 0.94999999999999996
+        }
+      ],
+      "type" : "public.heic"
+    },
+    {
+      "advertisedRead" : true,
+      "advertisedWrite" : false,
+      "attempts" : [
+
+      ],
+      "type" : "public.heif"
+    },
+    {
+      "advertisedRead" : true,
+      "advertisedWrite" : false,
+      "attempts" : [
+
+      ],
+      "type" : "org.webmproject.webp"
+    }
+  ],
+  "os" : "Version 26.5.1 (Build 25F80)",
+  "scope" : "Synthetic static RGB image; not metadata, HDR or minimum OS certification"
+}

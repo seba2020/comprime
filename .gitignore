@@ -1,0 +1,25 @@
+# macOS / Xcode
+.DS_Store
+DerivedData/
+.build/
+xcuserdata/
+*.xcuserstate
+# Landing
+node_modules/
+.next/
+.vercel/
+.env*
+!.env.example
+# Outputs and private fixtures
+*.dmg
+*.app/
+fixtures/private/
+fixtures/results/
+fixtures/mvp-checks/
+.comprime-backups/
+.build-cache/
+.swiftpm/
+work/
+fixtures/generated/inputs-*/
+fixtures/generated/replace-*/
+fixtures/generated/.*
