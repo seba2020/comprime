@@ -56,6 +56,20 @@ final class FolderScannerTests: XCTestCase {
         XCTAssertEqual(noThumbnails.assets.count, 1)
         XCTAssertNil(noThumbnails.assets.first?.thumbnail)
     }
+    func testLargeScanStreamsFirstAssetAndLimitsEagerThumbnails() async throws {
+        let root = try makeDirectory()
+        for index in 0..<90 {
+            try makePNG(root.appendingPathComponent("image-\(index).png"))
+        }
+        let limits = ScanLimits(eagerThumbnailCount: 3)
+        var updates: [ScanSnapshot] = []
+        for try await update in FolderScanner(limits: limits).scan(root) { updates.append(update) }
+
+        XCTAssertGreaterThanOrEqual(updates.count, 3)
+        XCTAssertEqual(updates.first?.assets.count, 1)
+        XCTAssertEqual(updates.last?.assets.count, 90)
+        XCTAssertEqual(updates.last?.assets.filter { $0.thumbnail != nil }.count, 3)
+    }
     func testEmptyFolderAndInvalidTarget() async throws {
         let result = try await scan(makeDirectory())
         XCTAssertTrue(result.isComplete)

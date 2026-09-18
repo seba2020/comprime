@@ -49,12 +49,17 @@ public struct ScanLimits: Sendable {
     public let maxSourceBytes: Int64
     public let thumbnailEdge: Int
     public let thumbnailBudget: Int
+    /// The sidebar only needs a small visual runway. Generating every thumbnail in
+    /// a large folder delays the first useful interaction and consumes memory.
+    public let eagerThumbnailCount: Int
     public init(maxPixels: Int64 = 80_000_000, maxSourceBytes: Int64 = 250_000_000,
-                thumbnailEdge: Int = 96, thumbnailBudget: Int = 24_000_000) {
+                thumbnailEdge: Int = 96, thumbnailBudget: Int = 24_000_000,
+                eagerThumbnailCount: Int = 80) {
         self.maxPixels = maxPixels
         self.maxSourceBytes = maxSourceBytes
         self.thumbnailEdge = thumbnailEdge
         self.thumbnailBudget = thumbnailBudget
+        self.eagerThumbnailCount = eagerThumbnailCount
     }
 }
 

@@ -103,7 +103,12 @@ final class LibraryModel: ObservableObject {
                 for try await update in FolderScanner().scan(url) {
                     guard current == generation, !Task.isCancelled else { return }
                     snapshot = update
-                    if selected == nil { selected = update.assets.first?.id }
+                    if selected == nil, let first = update.assets.first?.id {
+                        selected = first
+                        // Let the user inspect and tune the first photo while the rest
+                        // of a large folder is still being catalogued.
+                        refreshPreview()
+                    }
                 }
                 guard current == generation else { return }
                 scanning = false
@@ -129,7 +134,7 @@ final class LibraryModel: ObservableObject {
     func refreshPreview() {
         guard !running else { return }
         resetPreview()
-        guard !scanning, let asset = selectedAsset, let folder else { return }
+        guard let asset = selectedAsset, let folder else { return }
         let request: CompressionRequest
         do { request = try self.request() } catch { previewError = friendly(error); return }
         let current = previewGeneration

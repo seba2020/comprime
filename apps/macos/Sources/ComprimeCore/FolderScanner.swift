@@ -8,7 +8,10 @@ public struct FolderScanner: Sendable {
 
     /// Work runs on a detached task; stream termination cancels its producer.
     public func scan(_ folder: URL) -> AsyncThrowingStream<ScanSnapshot, Error> {
-        AsyncThrowingStream(bufferingPolicy: .bufferingNewest(1)) { continuation in
+        // There are at most one initial update plus one every 48 examined entries,
+        // so retaining these snapshots keeps the first result observable even when
+        // a local disk scan finishes before the main actor gets its first turn.
+        AsyncThrowingStream { continuation in
             let task = Task.detached(priority: .userInitiated) {
                 do {
                     let manager = FileManager.default
@@ -33,15 +36,22 @@ public struct FolderScanner: Sendable {
                                 continue
                             }
                             snapshot.examined += 1
+                            let remainingThumbnailBytes = snapshot.assets.count < limits.eagerThumbnailCount
+                                ? max(0, limits.thumbnailBudget - thumbnailBytes)
+                                : 0
                             let inspected = try autoreleasepool {
-                                try inspect(url, values: values, remainingThumbnailBytes: max(0, limits.thumbnailBudget - thumbnailBytes))
+                                try inspect(url, values: values, remainingThumbnailBytes: remainingThumbnailBytes)
                             }
                             thumbnailBytes += inspected.thumbnail?.count ?? 0
                             snapshot.assets.append(inspected)
                         } catch {
                             snapshot.issues.append(ScanIssue(url: url, reason: error.localizedDescription))
                         }
-                        if snapshot.examined % 12 == 0 { continuation.yield(snapshot) }
+                        // Yield the first usable result immediately. Subsequent larger batches
+                        // avoid repeatedly rebuilding a long SwiftUI sidebar during a scan.
+                        if snapshot.assets.count == 1 || snapshot.examined % 48 == 0 {
+                            continuation.yield(snapshot)
+                        }
                     }
                     try Task.checkCancellation()
                     snapshot.isComplete = true
